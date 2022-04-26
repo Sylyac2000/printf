@@ -67,8 +67,10 @@ int _printf(const char *format, ...)
 				if (f == NULL)  /* handle fake id */
 				{
 					len = check_buffer_overflow(buffer, len);
-					buffer[len++] = '%'; total_len++;
-					buffer[len++] = format[i]; total_len++;
+					buffer[len++] = '%';
+					total_len++;
+					buffer[len++] = format[i];
+					total_len++;
 				}
 				else /* return string, copy to buffer */
 				{
