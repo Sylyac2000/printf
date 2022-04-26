@@ -18,6 +18,21 @@ int check_buffer_overflow(char *buffer, int len)
 }
 
 /**
+ * executebyformat - mini printf version
+ * @buffer: buffer holding string to print
+ * @len: position in buffer
+ * @achar: char
+ * Return: void
+ */
+void executebyformat(char *buffer, int len, char achar)
+{
+	len = check_buffer_overflow(buffer, len);
+	buffer[len++] = achar;
+	/*total_len++;*/
+
+}
+
+/**
  * _printf - mini printf version
  * @format: initial string with all identifiers
  * Return: strings with identifiers expanded
@@ -31,13 +46,10 @@ int _printf(const char *format, ...)
 
 	if (format == NULL)
 		return (-1);
-
 	buffer = create_buffer();
 	if (buffer == NULL)
 		return (-1);
-
 	va_start(list, format);
-
 	while (format[i] != '\0')
 	{
 		if (format[i] != '%') /* copy format into buffer until '%' */
@@ -57,8 +69,8 @@ int _printf(const char *format, ...)
 			}
 			if (format[i] == '%') /* handle double %'s */
 			{
-				len = check_buffer_overflow(buffer, len);
-				buffer[len++] = format[i];
+				/*len = check_buffer_overflow(buffer, len);buffer[len++] = format[i];*/
+				executebyformat(buffer, len, format[i]);
 				total_len++;
 			}
 			else
@@ -66,8 +78,8 @@ int _printf(const char *format, ...)
 				f = get_func(format[i]); /* grab function */
 				if (f == NULL)  /* handle fake id */
 				{
-					len = check_buffer_overflow(buffer, len);
-					buffer[len++] = '%';
+					/*len = check_buffer_overflow(buffer, len);buffer[len++] = '%';*/
+					executebyformat(buffer, len, '%');
 					total_len++;
 					buffer[len++] = format[i];
 					total_len++;
@@ -83,16 +95,17 @@ int _printf(const char *format, ...)
 					}
 					if (format[i] == 'c' && str[0] == '\0')
 					{
-						len = check_buffer_overflow(buffer, len);
-						buffer[len++] = '\0';
+						/*len = check_buffer_overflow(buffer, len);buffer[len++] = '\0';*/
+						executebyformat(buffer, len, str[0]);
 						total_len++;
 					}
 					j = 0;
 					while (str[j] != '\0')
 					{
-						len = check_buffer_overflow(buffer, len);
-						buffer[len++] = str[j];
-						total_len++; j++;
+						/*len = check_buffer_overflow(buffer, len);buffer[len++] = str[j];total_len++;*/
+						executebyformat(buffer, len, str[j]);
+						total_len++;
+						j++;
 					}
 					free(str);
 				}
